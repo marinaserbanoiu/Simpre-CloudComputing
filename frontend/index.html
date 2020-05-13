@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Read many books</title>
+    </head>
+<style>
+        body {
+       background-color: #F3EBF6;
+        font-family: 'Ubuntu', sans-serif;
+    }
+    .id{
+         background-color: #FFFFFF;
+        width: 400px;
+        height: 540px;
+        float: right;
+        margin-top: 30px;
+        margin-right: 20px;
+       
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    }
+    .titlu{
+   font-size: 25px;
+   color: purple;
+   margin: 30px;   
+    }
+    img{
+            margin-left: 50px;
+        }
+        .un{
+             border: 8px solid rgba(0, 0, 0, 0.18);
+             margin-left:55px;
+             text-align: center;
+                width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+   outline:none;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+    }
+        .submit{
+            cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 60px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+       
+        font-family: 'Ubuntu', sans-serif;
+        margin-left: 5%;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);  
+        }
+      p{
+    text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+       color: #de83ee;
+       padding-top: 15px;
+    
+       }
+       a.lista{
+               cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 60px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+      
+        font-family: 'Ubuntu', sans-serif;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);  
+           text-decoration:none;
+           margin-left: 80px;
+           margin-top: 70px;
+           font-size: 20px;
+       }
+</style>
+    <body>
+        
+        
+        
+ <div class="id">
+     <h1 align="center" style="color:purple;">Add a favorite book</h1>
+<form onsubmit="AddBook(event)">
+  <input class="un" type="hidden" name="id" id="id" align="center" /><br>
+  <input class="un" autocomplete="off" type="text" name="title" id="title" align="center"/ placeholder="Title"><br />
+  <br/>
+  <input class="un" autocomplete="off" type="text" name="author" id="author" align="center" placeholder="Author"><br/>
+  <br />
+  <input class="un" autocomplete="off" type="text" name="subject" id="subject" align="center" placeholder="Subject"><br/>
+  <br />
+  <textarea class="un" autocomplete="off" name="description" id="description" align="center" placeholder="Add a short description about the book..."></textarea> <br/>
+  <input class="submit" type="submit"  value="Add a new book">
+  <input class="submit" type="reset"  value="Cancel">
+</form>
+</div>
+
+<div id="table"></div>
+<div class="titlu">
+            <h1 align="center"><b>Welcome to the world of books</b></h1>
+             <img src="image.jpg" alt="Many Books" align="center">
+        </div>
+        <br/>
+<a  class="lista" href="carte.html">View your list of books</a>
+<a  class="lista" href="bb.html">Search a book in Google Books</a>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script 
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function() {
+        console.log('Hello from JQuery')
+    })
+
+
+    function AddBook(event) {
+    event.preventDefault()
+
+    let id = $('#id').val()
+    let title = $('#title').val()
+    let author = $('#author').val()
+    let subject = $('#subject').val()
+    let description = $('#description').val() 
+    if(id) {
+    axios.put('/books/'+id, {
+    title: title,
+    author: author,
+    subject: subject,
+    description: description
+}).then(function(result) {
+  //showBooks()
+    $(event.target).trigger("reset")
+}).catch(function(err) {
+    alert('Resource could not be saved')
+})
+    
+    }else {
+    axios.post('/books', {
+  title: title,
+    author:author,
+    subject: subject,
+    description: description
+}).then(function(result) {
+  // showBooks()
+    $(event.target).trigger("reset")
+}).catch(function(err) {
+    alert('Resource could not be saved')
+})
+     }
+//showBooks()
+}
+</script>
+    </body>
+</html>
